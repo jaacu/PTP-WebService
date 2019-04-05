@@ -25,7 +25,7 @@
                     <h6><label for="status_message"> Mensaje del estatus </label></h6>
                     <input type="text" id="status_message" value="{{ $pago->status->message }}" readonly class="form-control text-center"> 
                 </div>
-                @if ( !$pago->isPending() )
+                @if ( !$pago->isPending() && !is_null($pago->payer) )
                 <div class="col-md-12 my-3 text-center">
                     <h4>Datos del Comprador</h4>
                 </div>

@@ -27,6 +27,7 @@ class UpdateJob implements ShouldQueue
     public function __construct(Pago $pago, $auth)
     {
         $this->pago = $pago;
+
         $this->auth = $auth;
     }
 
@@ -40,12 +41,14 @@ class UpdateJob implements ShouldQueue
         if ($this->pago->isChecked()) {
             return;
         }
-
         $url = "api/session/{$this->pago->requestId}";
         $client = new Client(['base_uri' => 'https://test.placetopay.com/redirection/']);
+        
         $response = $client->post($url, [
-            'json' => $this->auth
+            'json' =>  ['auth' => $this->auth]
         ]);
+
+        $response = json_decode($response->getBody()->getContents());
 
         $this->pago->update([
             'status' => optional($response->payment[0])->status ?? $response->status,

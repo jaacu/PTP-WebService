@@ -27,13 +27,17 @@
 
 <div class="row card p-3 my-3">
         {{ $pagos->links() }}
-    @foreach ($pagos as $pago)
+    @forelse ($pagos as $pago)
     <div class="card-body col-md-12">
         <h4>Referencia: <strong>{{ $pago->reference }}</strong> 
         <span class="badge badge-pill badge-{{ $pago->getStatusColor() }} ">{{ optional($pago->status)->status ?? 'PENDING' }}</span>
         <a href="{{ route('pagos.show', $pago) }}" class="btn btn-primary">Ver detalles.</a> </h4>
-    </div> 
-    @endforeach
+    </div>
+    @empty
+    <div class="card-body col-md-12">
+        <h4> Aun no hay ningun pago! </h4>
+    </div>
+    @endforelse
     {{ $pagos->links() }}
 </div>
 @endsection

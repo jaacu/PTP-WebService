@@ -65,8 +65,8 @@ class PagoController extends Controller
     {
         try {
             $data = array_merge(
-            ['auth' => $this->auth],
-            $extraData ?? []
+                ['auth' => $this->auth],
+                $extraData ?? []
         );
             $request = $this->client->post($url, [
             'json' => $data
@@ -89,7 +89,7 @@ class PagoController extends Controller
             ]);
             
                 UpdateJob::dispatch($pago, $this->auth)
-                    ->delay(now()->addMinutes(1));
+                ->delay(now()->addMinutes(1));
 
                 return redirect()->away($response->processUrl);
             }
@@ -159,7 +159,7 @@ class PagoController extends Controller
         $url = "api/session/{$pago->requestId}";
 
         $response = $this->makeHttpRequest($url);
-
+        
         $pago->update([
             'status' => optional($response->payment[0])->status ?? $response->status,
             'payer' => optional($response->request)->payer ?? null,
