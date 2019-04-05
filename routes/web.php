@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PagoController@index')->name('home');
+
+Route::post('pagos', 'PagoController@store')->name('pagos.store');
+
+Route::get('pagos/{pago}', 'PagoController@show')->name('pagos.show');
